@@ -3,6 +3,7 @@ package services
 import (
 	"errors"
 	"rideshare/models"
+	"strings"
 
 	"go.uber.org/zap"
 )
@@ -43,4 +44,30 @@ func (s *VehicleService) GetVehicle(userID int) (*models.Vehicle, error) {
     }
 
     return &vehicle, nil
+}
+
+func (s *VehicleService) CheckVehicleOwnership(userID int, vehicleDetails string) error {
+    
+
+    vehicle, exists := s.vehicles[userID]
+    if !exists {
+        return errors.New("user does not have a vehicle")
+    }
+
+	parts := strings.Split(vehicleDetails, ",")
+
+    if len(parts) != 2 {
+        return errors.New("invalid vehicle details")
+    }
+
+    
+    vehicleName := strings.TrimSpace(parts[0])
+    registrationNumber := strings.TrimSpace(parts[1])
+
+
+    if vehicle.Model != vehicleName || vehicle.LicensePlate != registrationNumber {
+        return errors.New("vehicle does not belong to user")
+    }
+
+    return nil
 }

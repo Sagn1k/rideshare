@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"os/signal"
 	"rideshare/handlers"
 	"rideshare/services"
 
@@ -35,13 +36,14 @@ func main() {
 	})
 
 	// Create instances of services
-    userService := services.NewUserService(zapLogger)
+	userService := services.NewUserService(zapLogger)
 	vehicleService := services.NewVehicleService(zapLogger)
+	rideService := services.NewRideService(zapLogger)
 
-
-    // Create instances of handlers
-    userHandler := handlers.NewUserHandler(userService, zapLogger)
+	// Create instances of handlers
+	userHandler := handlers.NewUserHandler(userService, zapLogger)
 	vehicleHandler := handlers.NewVehicleHandler(vehicleService, zapLogger)
+	rideHandler := handlers.NewRideHandler(rideService, vehicleService, zapLogger)
 
 	// Initialize Fiber app
 	app := fiber.New()
@@ -55,8 +57,26 @@ func main() {
 	app.Post("/vehicle", vehicleHandler.AddVehicle)
 	app.Get("/user/:id/vehicle", vehicleHandler.GetVehicle)
 
-	err = app.Listen(":3000")
-	if err != nil {
-		log.Fatalf("failed to start Fiber app: %v", err)
+	app.Post("/ride", rideHandler.OfferRide)
+	app.Get("/rides", rideHandler.GetAllRides)
+	app.Post("/ride/select", rideHandler.SelectRide)
+	app.Post("/ride/end", rideHandler.EndRide)
+
+	// Start Fiber app in a separate goroutine
+	go func() {
+		if err := app.Listen(":3000"); err != nil {
+			log.Fatalf("failed to start Fiber app: %v", err)
+		}
+	}()
+
+	// Wait for interrupt signal to gracefully shutdown the server
+	sigint := make(chan os.Signal, 1)
+	signal.Notify(sigint, os.Interrupt)
+	<-sigint
+
+	// Gracefully shutdown the server
+	if err := app.Shutdown(); err != nil {
+		log.Fatalf("graceful shutdown failed: %v", err)
 	}
+	log.Println("server gracefully shutdown")
 }
