@@ -6,8 +6,9 @@ type Ride struct {
 	Source         string `json:"origin"`
 	Destination    string `json:"destination"`
 	SeatsAvailable int    `json:"seatsAvailable"`
-	Passengers     []int  `json:"passengers"`
+	Passenger      int    `json:"passengers"`
 	Status         string `json:"status"`
+	Vehicle        string `json:"model"`
 	Active         bool   `json:"isActive"`
 }
 
@@ -20,6 +21,7 @@ type RideOfferRequest struct {
 }
 
 type RideSelection struct {
+	UserId            int    `json:"userId"`
 	Source            string `json:"source"`
 	Destination       string `json:"destination"`
 	Seats             int    `json:"seats"`
@@ -28,4 +30,9 @@ type RideSelection struct {
 
 type RideManagement struct {
 	RideID int `json:"rideId"`
+}
+
+type RideStats struct {
+	Taken   int
+	Offered int
 }

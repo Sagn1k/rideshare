@@ -43,7 +43,7 @@ func main() {
 	// Create instances of handlers
 	userHandler := handlers.NewUserHandler(userService, zapLogger)
 	vehicleHandler := handlers.NewVehicleHandler(vehicleService, zapLogger)
-	rideHandler := handlers.NewRideHandler(rideService, vehicleService, zapLogger)
+	rideHandler := handlers.NewRideHandler(rideService, vehicleService, userService, zapLogger)
 
 	// Initialize Fiber app
 	app := fiber.New()
@@ -61,6 +61,7 @@ func main() {
 	app.Get("/rides", rideHandler.GetAllRides)
 	app.Post("/ride/select", rideHandler.SelectRide)
 	app.Post("/ride/end", rideHandler.EndRide)
+	app.Get("/rides/stats", rideHandler.PrintRideStatsByUser)
 
 	// Start Fiber app in a separate goroutine
 	go func() {
