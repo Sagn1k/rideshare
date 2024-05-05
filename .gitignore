@@ -28,3 +28,6 @@ test.out
 
 # Windows directories
 Thumbs.db
+
+#log files
+*.log
