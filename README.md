@@ -1,4 +1,4 @@
-## RideShare:##
+## RideShare:
 
 Golang implementation of a ride sharing app.
 
