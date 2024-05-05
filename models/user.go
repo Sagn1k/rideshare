@@ -1,9 +1,10 @@
 package models
 
 type User struct {
-	ID       int
-    Name     string
-	//TODO: change role to enum
-    Role     string // Driver or Passenger
-    Vehicles []Vehicle
+	ID          int    `json:"id"`
+    Name        string `json:"name"`
+    Email       string `json:"email"`
+    PhoneNumber string `json:"phoneNumber"`
+	//TODO: Make Role as enum
+    Role        string `json:"role"` //Passenger or Driver
 }

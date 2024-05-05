@@ -2,10 +2,10 @@ package models
 
 type Ride struct {
 
-	ID           int
-    DriverID     int
-    Source       string
-    Destination  string
-    Available    int // Number of available seats
-    Active       bool
+	ID             int      `json:"id"`
+    DriverID       int      `json:"driverId"`
+    Source         string   `json:"source"`
+    Destination    string   `json:"destination"`
+    SeatsAvailable int      `json:"seatsAvailable"`
+    Passengers     []int    `json:"passengers"`
 }

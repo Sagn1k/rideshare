@@ -36,19 +36,24 @@ func main() {
 
 	// Create instances of services
     userService := services.NewUserService(zapLogger)
+	vehicleService := services.NewVehicleService(zapLogger)
+
 
     // Create instances of handlers
     userHandler := handlers.NewUserHandler(userService, zapLogger)
+	vehicleHandler := handlers.NewVehicleHandler(vehicleService, zapLogger)
 
 	// Initialize Fiber app
 	app := fiber.New()
 
-	// Register the logger middleware
 	app.Use(fiberLogger)
 
 	app.Post("/user", userHandler.AddUser)
 	app.Get("/user/:id", userHandler.GetUser)
 	app.Get("/users", userHandler.GetAllUsers)
+
+	app.Post("/vehicle", vehicleHandler.AddVehicle)
+	app.Get("/user/:id/vehicle", vehicleHandler.GetVehicle)
 
 	err = app.Listen(":3000")
 	if err != nil {
