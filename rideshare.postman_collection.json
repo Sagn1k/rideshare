@@ -1,0 +1,207 @@
+{
+	"info": {
+		"_postman_id": "097340b0-e1af-4cfd-902f-673827332dd0",
+		"name": "rideshare",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2139508"
+	},
+	"item": [
+		{
+			"name": "Add User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Rahul\",\n    \"gender\": \"M\",\n    \"age\": \"35\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/user/0",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/users",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Vehicle",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \"userId\": 0,\n    \"model\": \"Swift\",\n    \"licensePlate\": \"KA-01-12345\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/vehicle",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"vehicle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/user/0/vehicle",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"0",
+						"vehicle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "offer ride",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"driverId\": 0,\n\t\"origin\": \"Hyderabad\",\n\t\"destination\": \"Bangalore\",\n\t\"seatsAvailable\": 1,\n    \"vehicle\": \"Swift, KA-01-12345\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/ride",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"ride"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Select Ride",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 1,\n\t\"source\": \"Hyderabad\",\n\t\"destination\": \"Bangalore\",\n\t\"seats\": 1,\n    \"selectionStrategy\": \"Most Vacant\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/ride/select",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"ride",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ride stats",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\": 1,\n\t\"source\": \"Hyderabad\",\n\t\"destination\": \"Bangalore\",\n\t\"seats\": 1,\n    \"selectionStrategy\": \"Most Vacant\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/rides/stats",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"rides",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
